@@ -13,6 +13,14 @@ def ball_move(obj):
     elif obj.colliderect(player) or obj.colliderect(opponent):
         speed_x *= -1
 
+def player_motion(obj, s):
+    obj.y += s
+    if obj.top <= 0:
+        obj.top = 0
+    elif obj.bottom >= H:
+        obj.bottom = H
+
+
 W = 1280
 H = 720
 FPS = 60
@@ -53,6 +61,14 @@ while True:  # цикл игры
     pg.draw.aaline(screen, WHITE, [W // 2, 0], [W // 2, H])
     pg.draw.ellipse(screen, VIOLET, ball)
     pg.display.update()
+    keys = pg.key.get_pressed()
+    if keys[pg.K_UP]:
+        p_speed -= speed
+    elif keys[pg.K_DOWN]:
+        p_speed += speed
+    else:
+        p_speed = 0
 
     ball_move(ball)
+    player_motion(player,p_speed)
 
